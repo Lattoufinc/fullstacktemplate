@@ -69,17 +69,7 @@ const sessionPath = sessionClient.sessionPath(projectId, sessionId);
 
 io.on('connection', socket => {
   socket.on('fromClient', data => {
-    const request = {
-      session: sessionPath,
-      queryInput: {
-        text: {
-          text: 'are there any upcoming musicals in amman',
-          languageCode: languageCode
-        }
-      }
-    };
-    console.log('data', data.client);
-    sessionClient.detectIntent(request).then(res => {
+    api.sendTextMessageToDialogFlow(data.client).then(res => {
       console.log('Detected intent');
       const result = res[0].queryResult;
       socket.emit('fromServer', { server: res[0].queryResult.fulfillmentText });
