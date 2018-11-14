@@ -1,0 +1,30 @@
+.center {
+  margin: auto;
+  width: 20%;
+}
+
+.phone {
+  position: relative;
+  height: 100%;
+  top: 29px;
+  left: 250px;
+}
+
+.marvel-device {
+  zoom: 0.5;
+}
+
+.headerlogo {
+  display: block;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 50px;
+  width: auto;
+}
+
+.header {
+  padding-bottom: 4px;
+  margin-bottom: 5px;
+  border-bottom: 2px solid grey;
+}

@@ -1,0 +1,60 @@
+nav.navbar,
+.navbar-default {
+  background-color: white !important;
+}
+
+.sticky-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99999999;
+}
+.navbar-default {
+  background-image: none;
+  border: none;
+  border-radius: 0;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: black;
+}
+
+.navbar-default .navbar-brand {
+  color: white;
+  background-color: #ffff;
+}
+
+.navbar-default .navbar-toggle {
+  border-color: white;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: white;
+}
+
+.navbar-default .navbar-toggle:focus,
+.navbar-default .navbar-toggle:hover {
+  background-color: transparent;
+}
+
+.navbar-default .navbar-brand:hover {
+  background-color: white;
+}
+
+.navbar-default .navbar-brand {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-weight: bold;
+}
+
+.navbar-default .navbar-nav > li > a {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+  color: white;
+  background-color: #fe3562;
+}
+.logo {
+  height: 100%;
+  vertical-align: middle;
+}

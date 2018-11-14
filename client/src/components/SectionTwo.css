@@ -1,0 +1,11 @@
+.disp {
+  display: flex;
+}
+
+.person-wrapper {
+  margin-bottom: 2em;
+}
+
+code {
+  font-family: "Lato";
+}

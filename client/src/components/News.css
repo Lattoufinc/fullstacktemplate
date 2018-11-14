@@ -1,0 +1,12 @@
+.header-image-news {
+  width: 100%;
+  margin-top: -2em;
+  margin-bottom: 2em;
+}
+
+.about-profile-pic-news {
+  float: left;
+  margin: 0 1em 1em 0;
+  width: 50%;
+  height: 50%;
+}
