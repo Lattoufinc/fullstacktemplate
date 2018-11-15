@@ -23,21 +23,42 @@ class Chatbot extends Component {
             console.log('from client', res); // will print whatever was typed in the field.
           })
           .then(function(data) {
-            console.log(data);
             socket.on('fromServer', function(data) {
               // recieveing a reply from server.
+              console.log('from server invoked', data);
 
-              newMessage(data.server);
-              addAction();
+              if (data.type === 1) {
+                newSuggestion(data.server);
+              } else if (data.type === 2) {
+                newMessage(data.server);
+                addAction();
+              }
             });
           });
       });
 
     function newMessage(response) {
       that.botui.message.add({
+        cssClass: 'custom-class',
         content: response,
         delay: 0
       });
+    }
+
+    function newSuggestion(response) {
+      var newResponse = response.map(function(item) {
+        return { text: item.title, value: item.title };
+      });
+      console.log('new response', newResponse);
+      that.botui.action
+        .button({
+          action: newResponse
+        })
+        .then(function(res) {
+          socket.emit('fromClient', { client: res.value });
+          // will be called when a button is clicked.
+          console.log(res.value); // will print "one" from 'value'
+        });
     }
 
     function addAction() {
@@ -56,7 +77,7 @@ class Chatbot extends Component {
 
   render() {
     return (
-      <div>
+      <div className="botui-app-container">
         <Botui className="chat" ref={cmp => (this.botui = cmp)} />
       </div>
     );

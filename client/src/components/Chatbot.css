@@ -21,3 +21,7 @@
   margin: 30px;
   padding: 10px;
 }
+
+.botui-container {
+  background-color: pink !important;
+}
