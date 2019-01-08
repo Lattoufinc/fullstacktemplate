@@ -24,14 +24,18 @@ class Chatbot extends Component {
           })
           .then(function(data) {
             socket.on('fromServer', function(data) {
+              console.log(data);
               // recieveing a reply from server.
               console.log('from server invoked', data);
-
-              if (data.type === 1) {
-                newSuggestion(data.server);
-              } else if (data.type === 2) {
-                newMessage(data.server);
-                addAction();
+              for (var i = 0; i < data.answer.length; i++) {
+                if (data.answer[i].type === 1) {
+                  newSuggestion(data.answer[i].server);
+                } else if (data.answer[i].type === 2) {
+                  newMessage(data.answer[i].server);
+                  addAction();
+                } else if (data.answer[i].type === 3) {
+                  linkOutSuggestion(data.answer[i].server);
+                }
               }
             });
           });
@@ -39,7 +43,6 @@ class Chatbot extends Component {
 
     function newMessage(response) {
       that.botui.message.add({
-        cssClass: 'custom-class',
         content: response,
         delay: 0
       });
@@ -53,6 +56,18 @@ class Chatbot extends Component {
       that.botui.action
         .button({
           action: newResponse
+        })
+        .then(function(res) {
+          socket.emit('fromClient', { client: res.value });
+          // will be called when a button is clicked.
+          console.log(res.value); // will print "one" from 'value'
+        });
+    }
+
+    function linkOutSuggestion(response) {
+      that.botui.message
+        .add({
+          content: `[${response[0]}](${response[1]})`
         })
         .then(function(res) {
           socket.emit('fromClient', { client: res.value });

@@ -3,22 +3,34 @@ const dialogflow = require('dialogflow');
 const sessionClient = new dialogflow.SessionsClient();
 
 function checkType(results) {
-  if (results.fulfillmentText) {
-    console.log('detected simple response');
-    var type = 2;
-    var server = results.fulfillmentText;
-    return { server, type };
-  } else if (results.fulfillmentMessages[0].suggestions.suggestions[0].title) {
-    type = 1;
-    var server = results.fulfillmentMessages[0].suggestions.suggestions;
-    return { server, type };
-  }
+  const served = { answer: [] };
 
-  if (result.intent) {
-    console.log(`  Intent: ${result.intent.displayName}`);
-  } else {
-    console.log(`  No intent matched.`);
+  for (let i = 0; i < results.length; i++) {
+    if (results[i].text) {
+      var type = 2;
+      var server = results[i].text.text[0];
+      served.answer.push({ server, type });
+    } else if (results[i].simpleResponses) {
+      var type = 2;
+      var server = results[i].simpleResponses.simpleResponses[0].textToSpeech;
+      served.answer.push({ server, type });
+    } else if (results[i].suggestions) {
+      type = 1;
+      var server = results[i].suggestions.suggestions;
+      served.answer.push({ server, type });
+    } else if (results[i].linkOutSuggestion) {
+      type = 3;
+      console.log(results[i].linkOutSuggestion, 'wewo');
+      var server = [results[i].linkOutSuggestion.destinationName, results[i].linkOutSuggestion.uri];
+      served.answer.push({ server, type });
+    }
   }
+  // if (result.intent) {
+  //   console.log(`  Intent: ${result.intent.displayName}`);
+  // } else {
+  //   console.log(`  No intent matched.`);
+  // }
+  return served;
 }
 
 async function sendTextMessageToDialogFlow(textMessage) {
@@ -43,13 +55,13 @@ async function sendTextMessageToDialogFlow(textMessage) {
     const responses = await sessionClient.detectIntent(request);
 
     console.log('DialogFlow.sendTextMessageToDialogFlow: Detected intent');
-    const result = responses[0].queryResult;
-    const object = checkType(result);
-    console.log(object);
-    return object;
+    console.log(responses.expectedInputs, 'fifi17');
+    const result = responses[0].queryResult.fulfillmentMessages;
+
+    return checkType(result);
   } catch (err) {
-    console.error('DialogFlow.sendTextMessageToDialogFlow ERROR:', err);
-    throw err;
+    console.error('DialogFlow.sendTextMessageToDialogFlow ERROR: ', err);
+    // throw err;
   }
 }
 
