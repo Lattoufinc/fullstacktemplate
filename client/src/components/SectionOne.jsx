@@ -16,11 +16,9 @@ const SectionOne = () => (
         <Typing>
           <p className="type">
             Create your own personal AI Host,
-            <Typing.Backspace count={8} />
-            Event planner
-            <Typing.Backspace count={13} />
-            and Assistant.
-            <Typing.Backspace count={14} />
+            <Typing.Backspace count={9} /> Event planner
+            <Typing.Backspace count={14} /> and Assistant.
+            <Typing.Backspace count={15} />
           </p>
         </Typing>
       </div>

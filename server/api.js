@@ -1,6 +1,15 @@
 const dialogflow = require('dialogflow');
 
-const sessionClient = new dialogflow.SessionsClient();
+const dotenv = require('dotenv');
+dotenv.config();
+
+// for api authentication follow https://medium.com/@tzahi/how-to-setup-dialogflow-v2-authentication-programmatically-with-node-js-b37fa4815d89
+const sessionClient = new dialogflow.SessionsClient({
+  credentials: {
+    private_key: process.env.DIALOGFLOW_PRIVATE_KEY,
+    client_email: process.env.DIALOGFLOW_CLIENT_EMAIL
+  }
+});
 
 function checkType(results) {
   const served = { answer: [] };
